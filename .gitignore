@@ -82,4 +82,5 @@ dist
 
 # Service worker
 sw.*
-/.DS_Store
+/server/nuxt-cms-api-firebase.json
+.DS_Store
