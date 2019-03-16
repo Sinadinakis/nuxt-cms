@@ -1,15 +1,18 @@
 <template>
     <section class="section">
 
-        <Template :config="config"/>
-
-        <Editor/>
+        <Template :config="$store.state.application.slugComponents"
+                  v-if='!$store.state.application.is404' />
+        <div v-else>
+            This page is notfound
+        </div>
 
     </section>
 </template>
 
 <script>
-    import {mapState} from 'vuex';
+    import Editor from '../components/Editor';
+    import Template from '../components/Template';
 
     export default {
         name: 'HomePage',
@@ -33,11 +36,11 @@
             };
         },
         layout(context) {
-            return context.layout;
+            return context.config.layout;
         },
-        components: {},
-        computed: {
-            ...mapState(['application'])
+        components: {
+            Editor,
+            Template
         }
     };
 </script>
