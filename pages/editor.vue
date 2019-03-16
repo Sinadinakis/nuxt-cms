@@ -1,95 +1,172 @@
 <template>
     <section class="section">
+        <no-ssr>
+            <div class='container'>
 
-        <Template :config="template"/>
+                <nuxt-link to="/"
+                           class="button is-light">
+                    <b-icon icon="arrow-left"></b-icon>
+                    <span>home</span>
+                </nuxt-link>
 
-        <div v-for="(item,i) in template.components"
-             :key="i"
-        >
-            <div v-if="!item.components"
-                 class="row">
-                {{ item.name }}
-                <span @click="removeComponent(item, i)">remove</span>
-            </div>
-            <div v-else class="columns">
-                <div v-for="(slot, i) in item.components"
-                     :key="i"
-                     class="column"
-                >
-                    <div class="row">
-                        {{ i }}
-                        <span @click="addChildComponent(item, i)">add</span>
+                <Template :config="template"
+                          class="template" />
 
-                        <div v-for="(childSlot, i) in slot"
-                             :key="i"
-                        >
-                            {{ childSlot }}
-                            {{ i }}
+                <draggable v-model="template.components"
+                           @start="drag=true"
+                           @end="drag=false"
+                           class="template">
+
+                    <div v-for="(item,index) in template.components"
+                         :key="index"
+                         class='setup'
+                    >
+                        <div v-if="!item.components"
+                             class="row">
+                            {{ item.name }}
+                            <span @click="removeComponent(item, index)"
+                                  class="button is-small is-danger">remove row</span>
+                        </div>
+
+                        <div v-else class="columns">
+
+                            <div v-for="(slot, index2) in item.components"
+                                 :key="index2"
+                                 class="column"
+                            >
+                                <div class="row">
+                                    {{ index2 + 1}}
+                                    <span
+                                        @click="currentColumnItem = item; selectedColumnChildTemplateIndex = index2; isCardModalActive = true"
+                                        class='button is-info is-small'>add</span>
+                                    <span @click="removeColumnChildComponent(item, index2, index)"
+                                          class="button is-small is-danger">remove col</span>
+
+                                    <div v-for="(childSlot, i) in slot"
+                                         :key="i"
+                                    >
+                                        {{ childSlot }}
+                                        <span @click="removeColumnChildItem(item, index2, i)"
+                                              class="button is-small is-danger">remove</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <span @click="removeComponent(item, i)"
+                                  class="button is-small is-danger">remove row</span>
                         </div>
                     </div>
+                </draggable>
+
+                <div class="field is-grouped">
+                    <b-select v-model="selectedTemplate"
+                              size='is-small'>
+                        <option value="0" disabled>select</option>
+                        <option v-for="(item, i) in components"
+                                :key="i"
+                        >
+                            {{ item }}
+                        </option>
+                    </b-select>
+                    <span @click="addComponent"
+                          :disabled="selectedTemplate === 0"
+                          class="button is-primary is-small">add comp</span>
                 </div>
+
+                <div class="field is-grouped">
+                    <b-select v-model="selectedRows"
+                              size='is-small'>
+                        <option value="0" disabled>select</option>
+                        <option v-for="(item, i) in maxSelectedRows"
+                                :key="i"
+                        >
+                            {{ item + 1 }}
+                        </option>
+                    </b-select>
+                    <button @click="addRow"
+                            :disabled="selectedRows === 0"
+                            class="button is-primary is-small">add row
+                    </button>
+                </div>
+
+                <div class="field is-grouped">
+                    <b-input v-model="template.name"
+                             size='is-small'
+                             placeholder="Template name"
+                    />
+                    <button @click="saveTemplate"
+                            :disabled="!template.name"
+                            class="button is-primary is-small">save
+                    </button>
+                </div>
+
+                <div class="field is-grouped">
+                    Edit current templates:
+                </div>
+
+                <b-modal :active.sync="isCardModalActive"
+                         :width="400"
+                         :height="200"
+                         scroll="keep">
+                    <div class="card">
+                        <h2>Column: {{ selectedColumnChildTemplateIndex + 1 }}</h2>
+                        <div class='field is-grouped'>
+                            <b-select v-model="selectedColumnChildTemplate"
+                                      size='is-small'>
+                                <option value="0" disabled>select</option>
+                                <option v-for="(item, i) in components"
+                                        :key="i"
+                                >
+                                    {{ item }}
+                                </option>
+                            </b-select>
+                            <div class='buttons'>
+                        <span @click='addChildComponent()'
+                              class='button is-warning is-small'>
+                            add
+                        </span>
+                                <span @click='isCardModalActive = false'
+                                      class='button is-info is-small'>
+                                close
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </b-modal>
+
+                <Editor />
+
             </div>
-        </div>
-
-        <div>
-            <b-select v-model="selectedTemplate">
-                <option value="0" disabled>select</option>
-                <option v-for="(item, i) in components"
-                        :key="i"
-                >
-                    {{ item }}
-                </option>
-            </b-select>
-            <span @click="addComponent">add comp</span>
-        </div>
-
-        <div>
-            <b-select v-model="selectedRows">
-                <option value="0" disabled>select</option>
-                <option v-for="(item, i) in maxSelectedRows"
-                        :key="i"
-                >
-                    {{ item }}
-                </option>
-            </b-select>
-            <span @click="addRow">add row</span>
-        </div>
-
-        <pre>
-            {{ template }}
-        </pre>
-
+        </no-ssr>
     </section>
 </template>
 
 <script>
     import Template from '../components/Template';
+    import Editor from '../components/Editor';
+    import draggable from 'vuedraggable';
 
     export default {
-        name: 'HomePage',
-        layout(context) {
-            return context.layout;
-        },
+        name: 'EditorPage',
+        layout: 'editor',
         components: {
-            Template
+            Template,
+            draggable,
+            Editor
         },
         data() {
             return {
+                currentColumnItem: undefined,
+                isCardModalActive: false,
+                showAddColumnChild: false,
                 selectedTemplate: 0,
+                selectedColumnChildTemplate: 0,
+                selectedColumnChildTemplateIndex: null,
                 selectedRows: 0,
-                maxSelectedRows: 12,
+                maxSelectedRows: 11,
                 template: {
-                    name: 'Renatex',
+                    name: undefined,
                     components: []
-                },
-                templates: [
-                    {
-                        name: 'Title',
-                    },
-                    {
-                        name: 'Paragraph',
-                    }
-                ]
+                }
             };
         },
         computed: {
@@ -100,7 +177,7 @@
         methods: {
             addRow() {
                 let column = {name: 'Columns', components: []};
-                for (let row = 0; row <= this.selectedRows; row++) {
+                for (let row = 1; row <= this.selectedRows; row++) {
                     column.components.push([]);
                 }
                 this.template.components.push(column);
@@ -108,20 +185,51 @@
             addComponent() {
                 this.template.components.push({name: this.selectedTemplate});
             },
-            addChildComponent(item, slot) {
-                item.components[slot].push('Title');
+            addChildComponent() {
+                this.currentColumnItem.components[this.selectedColumnChildTemplateIndex].push(this.selectedColumnChildTemplate);
             },
             removeComponent(item, slot) {
-                item.components[slot].push('Title');
+                this.template.components.splice(slot, 1);
+            },
+            async saveTemplate() {
+                let {data} = await this.$axios.post('http://localhost:3000/api/template', this.template);
+            },
+            removeColumnChildComponent(item, slot, parentSlot) {
+                if (item.components.length === 2) {
+                    this.template.components.splice(parentSlot, 1);
+                }
+                item.components.splice(slot, 1);
+            },
+            removeColumnChildItem(item, i, slot) {
+                item.components[i].splice(slot, 1);
             }
         }
     };
 </script>
 
 <style scoped>
+    .template {
+        box-shadow: 0 0 20px #c8cdd6;
+        padding: 10px;
+        margin: 40px 0;
+    }
+
+    .setup {
+        margin: 20px 0;
+    }
 
     .row {
         background: #F5F5F5;
         padding: 5px;
+        margin: 10px 0;
+        cursor: move;
+    }
+
+    .card {
+        padding: 30px;
+    }
+
+    .card:hover {
+        box-shadow: 0 0 10px #F5F5F5;
     }
 </style>
