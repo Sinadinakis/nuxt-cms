@@ -1,6 +1,5 @@
 <template>
     <div>
-        Default
         <nav
             class="navbar header has-shadow is-primary"
             role="navigation"
@@ -8,18 +7,16 @@
         >
             <div class="navbar-brand">
                 <div class="navbar-burger">
-                    <span/>
-                    <span/>
-                    <span/>
+                    <span />
+                    <span />
+                    <span />
                 </div>
             </div>
         </nav>
 
         <section class="main-content columns">
-            <aside class="column is-2 section">
-                <p class="menu-label is-hidden-touch">
-                    General
-                </p>
+            <aside class="column is-3 section">
+
                 <ul class="menu-list">
                     <li
                         v-for="(item, key) of items"
@@ -29,7 +26,9 @@
                             :to="item.to"
                             exact-active-class="is-active"
                         >
-                            <b-icon :icon="item.icon"/>
+                            <font-awesome-icon
+                                :icon="item.icon" />
+
                             {{ item.title }}
                         </nuxt-link>
                     </li>
@@ -37,7 +36,7 @@
             </aside>
 
             <div class="container column is-10">
-                <nuxt/>
+                <nuxt />
             </div>
         </section>
     </div>
@@ -55,9 +54,14 @@
                         to: {path: '/'}
                     },
                     {
-                        title: 'Renatex',
-                        icon: 'lightbulb',
-                        to: {path: '/renatex'}
+                        title: 'Template Editor',
+                        icon: 'edit',
+                        to: {path: '/editor'}
+                    },
+                    {
+                        title: 'Slugs',
+                        icon: 'link',
+                        to: {path: '/slugs'}
                     }
                 ]
             };
