@@ -3,10 +3,10 @@
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">
-                    Renatex layout
+                    Renatex
                 </h1>
                 <h2 class="subtitle">
-                    Hero and footer
+                    Hello I'm a hero!
                 </h2>
             </div>
         </div>
