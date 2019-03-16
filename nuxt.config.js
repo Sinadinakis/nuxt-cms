@@ -19,7 +19,7 @@ module.exports = {
     },
 
     router: {
-        middleware: ['layout']
+        middleware: ['config']
     },
 
     /*
@@ -33,13 +33,16 @@ module.exports = {
     /*
     ** Global CSS
     */
-    css: [],
+    css: [
+        '@fortawesome/fontawesome-svg-core/styles.css'
+    ],
 
     /*
     ** Plugins to load before mounting the App
     */
     plugins: [
-        '~/plugins/globals.js'
+        '~/plugins/globals.js',
+        '~/plugins/fontawesome.js'
     ],
 
     /*
