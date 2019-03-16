@@ -13,8 +13,8 @@
                     </figure>
                 </div>
                 <div class="media-content">
-                    <p class="title is-4">John Smith</p>
-                    <p class="subtitle is-6">@johnsmith</p>
+                    <p class="title is-4">Renatex Sky</p>
+                    <p class="subtitle is-6">@re2005</p>
                 </div>
             </div>
 
@@ -23,7 +23,7 @@
                 Phasellus nec iaculis mauris. <a>@bulmaio</a>.
                 <a href="#">#css</a> <a href="#">#responsive</a>
                 <br>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                <time datetime="2016-1-1">11:09 PM - 11 March 2019</time>
             </div>
         </div>
     </div>

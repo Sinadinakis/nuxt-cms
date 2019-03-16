@@ -9,8 +9,8 @@
             <div class="media-content">
                 <div class="content">
                     <p>
-                        <strong>John Smith</strong>
-                        <small>@johnsmith</small>
+                        <strong>Renatex Sky</strong>
+                        <small>@re2005</small>
                         <small>31m</small>
                         <br>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa
