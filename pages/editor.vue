@@ -99,9 +99,27 @@
                     </button>
                 </div>
 
-                <div class="field is-grouped">
-                    Edit current templates:
+
+                <div class="field">
+                    <label class="label">Edit current templates:</label>
+                    <div class="control has-icons-left">
+                        <div class="select is-small">
+                            <select v-model='templateSelected'
+                                    @change='editTemplate'>
+                                <option value='undefined' disabled>Select...</option>
+                                <option v-for='(item, index) in $store.state.application.templates'
+                                        :key='index'>
+                                    {{ item.name }}
+                                </option>
+                            </select>
+                            <div class="icon is-small is-left">
+                                <font-awesome-icon
+                                    icon="file-alt" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
 
                 <b-modal :active.sync="isCardModalActive"
                          :width="400"
@@ -166,7 +184,8 @@
                 template: {
                     name: undefined,
                     components: []
-                }
+                },
+                templateSelected: undefined
             };
         },
         computed: {
@@ -175,6 +194,10 @@
             }
         },
         methods: {
+            editTemplate() {
+                let re = this.$store.state.application.templates[this.templateSelected];
+                Object.assign(this.template, re);
+            },
             addRow() {
                 let column = {name: 'Columns', components: []};
                 for (let row = 1; row <= this.selectedRows; row++) {
