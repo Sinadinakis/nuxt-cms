@@ -61,7 +61,7 @@
                     <b-select v-model="selectedTemplate"
                               size='is-small'>
                         <option value="0" disabled>select</option>
-                        <option v-for="(item, i) in components"
+                        <option v-for="(item, i) in $store.state.application.components"
                                 :key="i"
                         >
                             {{ item }}
@@ -131,7 +131,7 @@
                             <b-select v-model="selectedColumnChildTemplate"
                                       size='is-small'>
                                 <option value="0" disabled>select</option>
-                                <option v-for="(item, i) in components"
+                                <option v-for="(item, i) in $store.state.application.components"
                                         :key="i"
                                 >
                                     {{ item }}
@@ -162,6 +162,7 @@
     import Template from '../components/Template';
     import Editor from '../components/Editor';
     import draggable from 'vuedraggable';
+    import _clone from 'lodash/cloneDeep';
 
     export default {
         name: 'EditorPage',
@@ -188,15 +189,9 @@
                 templateSelected: undefined
             };
         },
-        computed: {
-            components() {
-                return this.$store.state.application.components;
-            }
-        },
         methods: {
             editTemplate() {
-                let re = this.$store.state.application.templates[this.templateSelected];
-                Object.assign(this.template, re);
+                this.template = _clone(this.$store.state.application.templates[this.templateSelected]);
             },
             addRow() {
                 let column = {name: 'Columns', components: []};
