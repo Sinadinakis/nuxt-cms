@@ -1,6 +1,5 @@
 <template>
     <div>
-        Blog
         <nav
             class="navbar header has-shadow is-primary"
             role="navigation"
@@ -8,23 +7,16 @@
         >
             <div class="navbar-brand">
                 <div class="navbar-burger">
-                    <span/>
-                    <span/>
-                    <span/>
+                    <span />
+                    <span />
+                    <span />
                 </div>
             </div>
         </nav>
 
         <section class="main-content columns">
-            <aside class="column is-2 section">
-                <p class="menu-label is-hidden-touch">
-                    General
-                </p>
-
-            </aside>
-
-            <div class="container column is-10">
-                <nuxt/>
+            <div class="container column is-12">
+                <nuxt />
             </div>
         </section>
     </div>

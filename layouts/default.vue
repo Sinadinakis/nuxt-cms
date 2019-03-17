@@ -1,70 +1,37 @@
 <template>
-    <div>
-        <nav
-            class="navbar header has-shadow is-primary"
-            role="navigation"
-            aria-label="main navigation"
-        >
-            <div class="navbar-brand">
-                <div class="navbar-burger">
-                    <span />
-                    <span />
-                    <span />
-                </div>
-            </div>
-        </nav>
+    <div class='container'>
 
-        <section class="main-content columns">
-            <aside class="column is-3 section">
+        <Header />
 
-                <ul class="menu-list">
-                    <li
-                        v-for="(item, key) of items"
-                        :key="key"
-                    >
-                        <nuxt-link
-                            :to="item.to"
-                            exact-active-class="is-active"
-                        >
-                            <font-awesome-icon
-                                :icon="item.icon" />
+        <nuxt class="container" />
 
-                            {{ item.title }}
-                        </nuxt-link>
-                    </li>
-                </ul>
-            </aside>
-
-            <div class="container column is-10">
-                <nuxt />
-            </div>
-        </section>
+        <Footer />
     </div>
 </template>
 
 <script>
+    import Header from '@/components/Header';
+    import Footer from '@/components/Footer';
 
     export default {
-        data() {
-            return {
-                items: [
-                    {
-                        title: 'Home',
-                        icon: 'home',
-                        to: {path: '/'}
-                    },
-                    {
-                        title: 'Template Editor',
-                        icon: 'edit',
-                        to: {path: '/editor'}
-                    },
-                    {
-                        title: 'Slugs',
-                        icon: 'link',
-                        to: {path: '/slugs'}
-                    }
-                ]
-            };
+        components: {
+            Header,
+            Footer
+        },
+        mounted() {
+            if (process.client) {
+                const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+                if ($navbarBurgers.length > 0) {
+                    $navbarBurgers.forEach(el => {
+                        el.addEventListener('click', () => {
+                            const target = el.dataset.target;
+                            const $target = document.getElementById(target);
+                            el.classList.toggle('is-active');
+                            $target.classList.toggle('is-active');
+                        });
+                    });
+                }
+            }
         }
     };
 </script>

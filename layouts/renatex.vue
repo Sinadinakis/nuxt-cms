@@ -1,77 +1,58 @@
 <template>
-    <div>
+    <div class='container'>
 
-        <nav class="navbar" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="/">
-                    Nuxt CMS
-                </a>
+        <Header />
 
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-                   data-target="navbarBasicExample">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
+        <section class="main-content columns">
+            <aside class="column is-3 section">
 
-            <div id="navbarBasicExample" class="navbar-menu">
+                <ul class="menu-list">
+                    <li
+                        v-for="(item, key) of items"
+                        :key="key"
+                    >
+                        <nuxt-link
+                            :to="item.to"
+                            exact-active-class="is-active"
+                        >
+                            <font-awesome-icon
+                                :icon="item.icon" />
 
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                        <ul class="bd-tabs">
-                            <li v-for="(item, key) of application.slugs"
-                                :key="key"
-                            >
-                                <nuxt-link
-                                    :to="item.slug"
-                                    exact-active-class="is-active"
-                                >
-                                    {{ item.name }}
-                                </nuxt-link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
+                            {{ item.title }}
+                        </nuxt-link>
+                    </li>
+                </ul>
+            </aside>
 
-
-        <section class="hero is-primary">
-            <div class="hero-body">
-                <div class="container">
-                    <h1 class="title">
-                        Renatex layout
-                    </h1>
-                    <h2 class="subtitle">
-                        Hero and footer
-                    </h2>
-                </div>
+            <div class="container column is-7">
+                <nuxt />
             </div>
         </section>
-
-        <div class="container column is-10">
-            <nuxt/>
-        </div>
-
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p>
-                    <strong>Nuxt CMS</strong> by <a href="https://github.com/re2005">Renato Cardoso</a>.
-                    The source code is Open Souce
-                </p>
-            </div>
-        </footer>
-
     </div>
 </template>
 
 <script>
-    import {mapState} from 'vuex';
+    import Header from '@/components/Header';
 
     export default {
-        computed: {
-            ...mapState(['application'])
+        components: {
+            Header
+        },
+        data() {
+            return {
+                items: [
+                    {
+                        title: 'Home',
+                        icon: 'home',
+                        to: {path: '/'}
+                    },
+                    {
+                        title: 'Template Editor',
+                        icon: 'edit',
+                        to: {path: '/editor'}
+                    }
+                ]
+            };
         },
         mounted() {
             if (process.client) {
@@ -86,8 +67,8 @@
                         });
                     });
                 }
-
             }
         }
     };
 </script>
+
