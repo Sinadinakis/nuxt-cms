@@ -7,9 +7,9 @@ admin.initializeApp({
 });
 
 const db = admin.database();
-const slugsRef = db.ref("slugs");
+const slugsRef = db.ref("slug");
 const layoutsRef = db.ref("layout");
-const templatesRef = db.ref("templates");
+const templatesRef = db.ref("template");
 
 layoutsRef.on('value', data => {
     FireBase.localLayouts = data.val();
