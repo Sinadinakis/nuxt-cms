@@ -1,6 +1,8 @@
-# nuxt-cms
+![Nuxt CMS](https://re2005.github.io/nuxt-cms/assets/nuxt-cms-logo.svg)
 
-> nuxt cms poc
+# Welcome to Nuxt CMS
+
+> This is a POC for a modular cms using Firebase
 
 ## Build Setup
 
@@ -18,5 +20,3 @@ $ npm start
 # generate static project
 $ npm run generate
 ```
-
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
