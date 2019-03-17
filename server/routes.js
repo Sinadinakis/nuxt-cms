@@ -11,17 +11,17 @@ router.get('/api/slug', (req, res) => {
 });
 
 router.post('/api/slug', (req, res) => {
-    const newSlugRef = FireBase.db.ref("slugs/" + req.body.slug.replace('/', 'index'));
+    const newSlugRef = FireBase.db.ref("slug/" + req.body.slug.replace('/', 'index'));
     newSlugRef.set(req.body).then(() => sendJson(res, FireBase.localSlugs));
 });
 
 router.delete('/api/slug', (req, res) => {
-    const newSlugRef = FireBase.db.ref("slugs/" + req.body.slug);
+    const newSlugRef = FireBase.db.ref("slug/" + req.body.slug);
     newSlugRef.remove().then(() => sendJson(res, FireBase.localSlugs));
 });
 
 router.post('/api/template', (req, res) => {
-    const newTemplate = FireBase.db.ref("templates/" + req.body.name);
+    const newTemplate = FireBase.db.ref("template/" + req.body.name);
     newTemplate.set(req.body).then(() => sendJson(res, FireBase.localTemplates));
 });
 
@@ -29,15 +29,23 @@ router.get('/api/template', (req, res) => {
     sendJson(res, FireBase.localTemplates);
 });
 
+
+router.delete('/api/template', (req, res) => {
+    const newTemplateRef = FireBase.db.ref("template/" + req.body.template);
+    newTemplateRef.remove().then(() => sendJson(res, FireBase.localTemplates));
+});
+
 router.post('/api/layout', (req, res) => {
     FireBase.layoutsRef.push(req.body.name).then(() => sendJson(res, FireBase.localLayouts));
 });
 
-router.get('/api/layouts', (req, res) => {
+router.get('/api/layout', (req, res) => {
     sendJson(res, FireBase.localLayouts);
 });
 
 router.get('/api/config', (req, res) => {
+
+    if (!FireBase.localSlugs) FireBase.localSlugs = {};
     let slug = FireBase.localSlugs[req.query.slug] || {
         layout: 'default',
         template: 'default',
