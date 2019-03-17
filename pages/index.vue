@@ -1,6 +1,7 @@
 <template>
     <section class="section">
-        <Template :config="$store.state.application.slugComponents" />
+        <!--<Template :config="$store.state.application.slugComponents" />-->
+        Welcome to Nuxt CMS
     </section>
 </template>
 
@@ -9,9 +10,7 @@
 
     export default {
         name: 'HomePage',
-        layout(context) {
-            return context.config.layout;
-        },
+        layout: 'default',
         components: {
             Template
         }
