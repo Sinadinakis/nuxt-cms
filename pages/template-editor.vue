@@ -167,8 +167,6 @@
                     </div>
                 </b-modal>
 
-                <Editor />
-
             </div>
         </no-ssr>
     </section>
