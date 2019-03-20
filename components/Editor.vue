@@ -71,7 +71,8 @@
 
             <button
                 class="button is-primary is-small"
-                @click="addSlug">Add
+                @click="addSlug"
+                :disabled="!isPageValid">Add
             </button>
         </section>
 
@@ -118,13 +119,23 @@
                 config: {
                     slug: undefined,
                     layout: undefined,
-                    path: undefined,
+                    name: undefined,
                     template: undefined
                 }
             };
         },
+        computed: {
+            isPageValid() {
+                let isValid = true;
+                for (let item in this.config) {
+                    if (!this.config[item]) isValid = false;
+                }
+                return isValid;
+            }
+        },
         methods: {
             async addSlug() {
+                if (!this.isPageValid) return;
                 let {data} = await this.$axios.post('http://localhost:3000/api/slug', this.config);
                 this.$store.dispatch('application/updateSlugs', data);
                 this.config = {};

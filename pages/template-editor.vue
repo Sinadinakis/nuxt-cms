@@ -120,7 +120,7 @@
                             </div>
                         </div>
 
-                        <span class='button is-small is-danger'
+                        <span class='button is-small is-danger remove'
                               :disabled='!templateSelected'
                               @click='removeTemplate'>
                             <span class='icon'>
@@ -213,6 +213,7 @@
                 this.template.components.push(column);
             },
             addComponent() {
+                if (this.selectedTemplate === 0) return;
                 this.template.components.push({name: this.selectedTemplate});
             },
             addChildComponent() {
@@ -235,6 +236,7 @@
                 item.components[i].splice(slot, 1);
             },
             async removeTemplate() {
+                if (!this.templateSelected) return;
                 let {data} = await this.$axios.delete('http://localhost:3000/api/template', {data: {template: this.templateSelected}});
                 this.$store.dispatch('application/updateTemplates', data);
                 location.reload(true);
@@ -244,18 +246,6 @@
 </script>
 
 <style scoped>
-
-    .editor {
-        /*position: fixed;*/
-        /*left: 0;*/
-        /*right: 0;*/
-        /*bottom: 0;*/
-        /*height: 400px;*/
-        /*background: white;*/
-        /*z-index: 10;*/
-        /*overflow: auto;*/
-        /*display: flex;*/
-    }
 
     .template {
         box-shadow: 0 0 20px #c8cdd6;
@@ -288,4 +278,5 @@
     .card:hover {
         box-shadow: 0 0 10px #F5F5F5;
     }
+
 </style>
