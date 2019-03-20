@@ -102,8 +102,6 @@
                         </button>
                     </div>
 
-
-                    <h3>Edit:</h3>
                     <div class="field is-grouped">
                         <div class="control has-icons-left">
                             <div class="select is-small">

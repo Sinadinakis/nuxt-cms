@@ -1,43 +1,40 @@
 <template>
-    <section class="section">
-        <no-ssr>
-            <div class='container'>
+    <div class="container">
 
-                <nuxt-link to="/"
-                           class="button is-light">
-                    <b-icon icon="arrow-left"></b-icon>
-                    <span>home</span>
-                </nuxt-link>
+        <div class='section'>
 
-                <Template :config="template"
-                          class="template" />
+            <nuxt-link to="/"
+                       class="button is-light">
+                <b-icon icon="arrow-left"></b-icon>
+                <span>home</span>
+            </nuxt-link>
 
-                <h3>Edit:</h3>
+            <Template :config="template"
+                      class="template" />
 
-                <div class="field is-grouped">
-                    <div class="control has-icons-left">
-                        <div class="select is-small">
-                            <select v-model='templateSelected'
-                                    @change='editTemplate'>
-                                <option value='undefined' disabled>Select...</option>
-                                <option v-for='(item, index) in $store.state.application.templates'
-                                        :key='index'>
-                                    {{ item.name }}
-                                </option>
-                            </select>
-                            <div class="icon is-small is-left">
-                                <font-awesome-icon
-                                    icon="file-alt" />
-                            </div>
+
+            <div class="field is-grouped">
+                <div class="control has-icons-left">
+                    <div class="select is-small">
+                        <select v-model='templateSelected'
+                                @change='editTemplate'>
+                            <option value='undefined' disabled>Select template</option>
+                            <option v-for='(item, index) in $store.state.application.templates'
+                                    :key='index'>
+                                {{ item.name }}
+                            </option>
+                        </select>
+                        <div class="icon is-small is-left">
+                            <font-awesome-icon
+                                icon="file-alt" />
                         </div>
                     </div>
                 </div>
-
-                <Editor />
-
             </div>
-        </no-ssr>
-    </section>
+        </div>
+
+        <Editor />
+    </div>
 </template>
 
 <script>

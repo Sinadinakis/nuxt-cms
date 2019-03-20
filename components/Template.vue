@@ -4,7 +4,8 @@
             v-for="(component, index) in config.components"
             :is="component.name"
             :key="index"
-            :config="component.components"/>
+            :config="component.components"
+            class="template-line" />
     </div>
 </template>
 
@@ -24,3 +25,9 @@
         }
     };
 </script>
+
+<style>
+    .template-line {
+        margin: 20px 0;
+    }
+</style>

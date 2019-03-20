@@ -1,33 +1,8 @@
 <template>
-    <section class="section">
+    <div class="container">
 
-        <ul class="menu-list">
-            <li
-                v-for="(item, key) of $store.state.application.slugs"
-                :key="key"
-                class='field is-grouped'
-            >
-                <nuxt-link
-                    :to="item.slug"
-                    exact-active-class="is-active"
-                >
-                    <span>{{ item.name }}</span>
-                </nuxt-link>
-                <span class="tags has-addons">
-                    <span class="tag">layout: </span><span class="tag is-info">{{ item.layout }}</span>
-                    <span class="tag">template: </span><span class="tag is-info">{{ item.template }}</span>
-                </span>
-                <div>
-                    <span class="button is-warning is-small"
-                          @click="editSlug(item)">edit</span>
-                    <span class="button is-danger is-small"
-                          @click="removeSlug(item.slug)">remove</span>
-                </div>
-            </li>
-        </ul>
-
-        <div class="container">
-            <h1 class="title">Add page</h1>
+        <section class="section">
+            <h3 class="title">Add page</h3>
 
             <div class="field">
                 <label class="label">Slug</label>
@@ -98,8 +73,41 @@
                 class="button is-primary is-small"
                 @click="addSlug">Add
             </button>
-        </div>
-    </section>
+        </section>
+
+        <section class="section">
+
+            <div class="content is-medium">
+                <h3>Other pages</h3>
+
+                <ul class="menu-list">
+                    <li
+                        v-for="(item, key) of $store.state.application.slugs"
+                        :key="key"
+                        class='field is-grouped'
+                    >
+                        <nuxt-link
+                            :to="item.slug"
+                            exact-active-class="is-active"
+                        >
+                            <span>{{ item.name }}</span>
+                        </nuxt-link>
+                        <span class="tags has-addons">
+                    <span class="tag">layout: </span><span class="tag is-info">{{ item.layout }}</span>
+                    <span class="tag">template: </span><span class="tag is-info">{{ item.template }}</span>
+                </span>
+                        <div>
+                    <span class="button is-warning is-small"
+                          @click="editSlug(item)">edit</span>
+                            <span class="button is-danger is-small"
+                                  @click="removeSlug(item.slug)">remove</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </section>
+    </div>
 </template>
 
 <script>
